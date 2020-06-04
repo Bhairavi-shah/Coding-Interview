@@ -34,6 +34,30 @@ Solution 1
 ==========
 
 ```python
-def merge_ranges(list_of_tuples):
-    
+def merge_ranges(l):
+    res = [l[0],]
+    for i in range(1, len(l)):
+        f = 0
+        for j in range(len(res)):
+            temp = sorted(list(range(l[i][0], l[i][1]+1))+list(range(res[j][0], res[j][1]+1)))
+            if len(temp) != len(set(temp)):
+                f = 1
+                del(res[j])
+                res += [(temp[0],temp[-1]),]                
+        if f == 0:
+            res+= [l[i]]
+    return(res)            
+
+#Sample input/output
+merge_ranges([(0, 1), (3, 5), (4, 8), (10, 12), (9, 10)])
+[(0, 1), (3, 8), (9, 12)]
+
+merge_ranges([(1, 2), (2, 3)])
+[(1, 3)]
+
+merge_ranges([(1, 5), (2, 3)])
+[(1, 5)]
+
+merge_ranges([(1, 10), (2, 6), (3, 5), (7, 9)])
+[(1, 10)]
 ```
